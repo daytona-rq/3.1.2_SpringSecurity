@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<h1>Profile</h1>
+<p>Username: <span th:text="${user.username}"></span></p>
+<p>Age: <span th:text="${user.age}"></span></p>
+<p>Has Car: <span th:text="${user.hasCar} ? 'Yes' : 'No'"></span></p>
+<p>Roles:
+    <span th:each="role : ${user.roles}" th:text="${role.name} + ' '"></span>
+</p>
+<div th:replace="fragments :: logout-button"></div>
+
+</body>
+</html>

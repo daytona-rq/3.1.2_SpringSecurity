@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add User</title>
+</head>
+<body>
+<h3>Add New User</h3>
+<form th:action="@{/admin/create}" method="post" th:object="${user}">
+  <label>
+    Username: <input type="text" name="username" th:field="*{username}" required/>
+    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red"></span>
+  </label>
+  <br/><br/>
+  <label>
+    Password: <input type="text" name="password" th:field="*{password}" required/>
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red"></span>
+  </label>
+  <br/><br/>
+  <label>
+    Age: <input type="number" name="age" th:field="*{age}" required/>
+    <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}" style="color: red"></span>
+  </label>
+  <br/><br/>
+  <label>Roles: </label>
+      <div th:each="role : ${allRoles}">
+        <input type="checkbox"
+               th:field="*{roleIds}"
+               th:id="${'ROLE_' + role.id}"
+               th:value="${role.id}"
+               />
+        <label th:for="${'ROLE_' + role.id}" th:text="${role.name}"></label>
+      </div>
+        <span th:if="${#fields.hasErrors('roleIds')}" th:errors="*{roleIds}" style="color: red"></span>
+  <br/><br/>
+  <label>Has Car: <input type="checkbox" name="hasCar" th:field="*{hasCar}"/></label><br>
+  <button type="submit">Add User</button>
+</form>
+
+<div th:replace="fragments :: logout-button"></div>
+</body>
+</html>

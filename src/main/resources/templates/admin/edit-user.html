@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit User</title>
+</head>
+<body>
+<h3>Edit User</h3>
+<form th:action="@{/admin/edit-user}" method="post" th:object="${user}">
+
+    <input type="hidden" name="id" th:field="*{id}"/><br/>
+
+    <label>
+        Name: <input type="text" th:field="*{username}" required/>
+        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+    </label>
+    <br/>
+    <label>
+        Age: <input type="number" th:field="*{age}" required/>
+        <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
+    </label>
+    <br/>
+    <label>
+        Has Car: <input type="checkbox" th:field="*{hasCar}"/>
+    </label>
+    <br/>
+    <div>
+        <label>Roles: </label>
+        <div th:each="role : ${allRoles}">
+            <input type="checkbox"
+                   th:field="*{roleIds}"
+                   th:id="${'ROLE_' + role.id}"
+                   th:value="${role.id}"
+            />
+            <label th:for="${'ROLE_' + role.id}" th:text="${role.name}"></label>
+        </div>
+        <span th:if="${#fields.hasErrors('roleIds')}" th:errors="*{roleIds}" style="color: red"></span>
+        <br/><br/>
+    </div>
+    <button type="submit">Update</button>
+</form>
+<div th:replace="fragments :: logout-button"></div>
+</body>
+</html>

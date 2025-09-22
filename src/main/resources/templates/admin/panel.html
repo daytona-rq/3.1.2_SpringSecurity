@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+</head>
+<body>
+<div><h1>Admin Panel</h1></div>
+<div>
+    <table>
+        <tr>
+            <td>Users Table</td>
+            <td>
+                <form th:action="@{/admin/add-user}" method="get">
+                    <button type="submit">Add User</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<div>
+    <table border="1">
+        <tr>
+            <th>id</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Has Car</th>
+            <th>Roles</th>
+        </tr>
+        <tr th:each="userEntity : ${users}">
+            <td th:text="${userEntity.id}"></td>
+            <td th:text="${userEntity.username}"></td>
+            <td th:text="${userEntity.age}"></td>
+            <td th:text="${userEntity.hasCar} ? 'Yes' : 'No'"></td>
+            <td>
+                <span th:each="role : ${userEntity.roles}" th:text="${role.name} + ' '"></span>
+            </td>
+            <td>
+                <form th:action="@{/admin/edit-user}" method="get">
+                    <input type="hidden" name="id" th:value="${userEntity.id}">
+                    <button th:type="submit">Edit</button>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/admin/delete-user}" method="post">
+                    <input type="hidden" name="id" th:value="${userEntity.id}">
+                    <button th:type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div th:replace="fragments :: logout-button"></div>
+</body>
+</html>
